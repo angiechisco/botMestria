@@ -38,7 +38,7 @@ def on_command_menu(message):
     markup.add(itembtn1, itembtn2)
    
     bot.send_message(message.chat.id, "Selecciona una opción del menú:",
-    reply_markup=markup)
+        reply_markup=markup)
 
 @bot.message_handler(commands=['imc'])
 def on_command_imc(message):
@@ -77,9 +77,17 @@ def process_gender_step(message):
 def imc(message):
     record = bot_data[message.chat.id]
     imc = record.weight / pow(record.height, 2)
-    answer = f"Data = (Height: {record.height}, Weight: {record.weight}, Gender:{record.gender})\nIMC = {imc}"
+    answer = f"Data = (Height: {record.height}, Weight: {record.weight}, Gender:{record.gender})\nIMC = {imc}" 
+    pronostico=""
+    if answer < 18.90:
+        pronostico="peso bajo"
+    if answer >18.5 :
+        pronostico="peso normal"
+    if answer >= 25.0:
+        pronostico="peso alto"
+    if answer >= 30.0:
+        pronostico="peso obeso"
     bot.reply_to(message, answer)
-
 
 
 @bot.message_handler(func=lambda message: True)
